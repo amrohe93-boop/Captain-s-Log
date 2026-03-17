@@ -485,6 +485,159 @@ input::placeholder, textarea::placeholder { font-family: 'IM Fell English', seri
 .freeze-btn { width: 100%; padding: .42rem; border: 1px solid rgba(26,112,144,.26); border-radius: 1px; background: rgba(26,112,144,.06); color: var(--ocean-lt); font-family: 'Cormorant SC', serif; font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; margin-bottom: .26rem; }
 
 @media(max-width:380px) { .parchment-page { padding: 1rem 1rem 1.8rem; } }
+
+/* ── CREW CARDS ── */
+.crew-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin-bottom: 1.2rem; }
+.crew-card {
+  border-radius: 3px; overflow: hidden; position: relative;
+  box-shadow: 2px 3px 10px rgba(0,0,0,.35);
+  cursor: default;
+}
+/* COMMON — woodcut parchment */
+.crew-card.common {
+  background: linear-gradient(160deg, #f0e4c8, #e0cc98);
+  border: 1px solid rgba(140,90,20,.4);
+}
+.crew-card.common .card-inner { background: transparent; }
+
+/* RARE — holographic foil shimmer */
+.crew-card.rare {
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  border: 1px solid rgba(100,180,255,.3);
+}
+.crew-card.rare::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(125deg,
+    transparent 0%, rgba(120,200,255,.08) 20%,
+    rgba(200,120,255,.1) 35%, rgba(120,255,200,.08) 50%,
+    rgba(255,200,120,.1) 65%, rgba(120,200,255,.08) 80%, transparent 100%);
+  animation: holoShift 4s ease-in-out infinite alternate;
+}
+@keyframes holoShift {
+  0% { background-position: 0% 50%; opacity: .6; }
+  100% { background-position: 100% 50%; opacity: 1; }
+}
+.crew-card.rare::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background: repeating-linear-gradient(
+    45deg, transparent, transparent 2px,
+    rgba(255,255,255,.015) 2px, rgba(255,255,255,.015) 4px
+  );
+}
+
+/* LEGENDARY — neon dark */
+.crew-card.legendary {
+  background: linear-gradient(160deg, #0a0010, #100020, #0a0015);
+  border: 1px solid rgba(180,50,255,.5);
+  box-shadow: 0 0 12px rgba(180,50,255,.3), 2px 3px 10px rgba(0,0,0,.5), inset 0 0 20px rgba(100,0,200,.1);
+}
+.crew-card.legendary::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(135deg,
+    rgba(180,50,255,.12) 0%, transparent 30%,
+    rgba(50,200,255,.1) 50%, transparent 70%,
+    rgba(255,50,150,.1) 100%);
+  animation: neonPulse 3s ease-in-out infinite alternate;
+}
+@keyframes neonPulse { 0% { opacity: .5; } 100% { opacity: 1; } }
+
+.card-portrait {
+  width: 100%; height: 110px; overflow: hidden; position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.card-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card-portrait-ph {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .3rem; padding: .5rem;
+}
+.common .card-portrait-ph { background: linear-gradient(160deg, #d0b880, #b89848); }
+.rare .card-portrait-ph { background: linear-gradient(160deg, #1a2a4a, #0f1e38); }
+.legendary .card-portrait-ph { background: linear-gradient(160deg, #1a0028, #0f0018); }
+.card-portrait-ph .ph-icon { font-size: 1.5rem; opacity: .5; }
+.card-portrait-ph .ph-text {
+  font-family: 'IM Fell English', serif; font-style: italic;
+  font-size: .62rem; text-align: center; line-height: 1.4;
+}
+.common .ph-text { color: var(--sepia); }
+.rare .ph-text { color: rgba(150,200,255,.6); }
+.legendary .ph-text { color: rgba(180,100,255,.6); }
+
+.card-body { padding: .5rem .55rem .55rem; position: relative; z-index: 1; }
+.card-rarity {
+  font-family: 'Cormorant SC', serif; font-size: .48rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  margin-bottom: .15rem;
+}
+.common .card-rarity { color: rgba(140,90,20,.5); }
+.rare .card-rarity { color: rgba(100,180,255,.7); }
+.legendary .card-rarity { color: rgba(200,100,255,.8); text-shadow: 0 0 8px rgba(200,100,255,.5); }
+.card-name {
+  font-family: 'Cormorant SC', serif; font-size: .82rem; font-weight: 600;
+  margin-bottom: .1rem;
+}
+.common .card-name { color: var(--rust); }
+.rare .card-name { color: rgba(180,220,255,.9); }
+.legendary .card-name { color: rgba(220,150,255,.95); text-shadow: 0 0 10px rgba(200,100,255,.4); }
+.card-role {
+  font-family: 'IM Fell English', serif; font-style: italic;
+  font-size: .7rem; margin-bottom: .3rem;
+}
+.common .card-role { color: var(--sepia); }
+.rare .card-role { color: rgba(140,200,255,.65); }
+.legendary .card-role { color: rgba(180,120,255,.7); }
+.card-flavour {
+  font-family: 'IM Fell English', serif; font-style: italic;
+  font-size: .65rem; line-height: 1.5;
+}
+.common .card-flavour { color: rgba(90,55,15,.6); }
+.rare .card-flavour { color: rgba(120,180,255,.55); }
+.legendary .card-flavour { color: rgba(160,100,255,.6); }
+.card-gen-btn {
+  width: 100%; margin-top: .35rem; padding: .28rem .4rem;
+  font-family: 'Cormorant SC', serif; font-size: .52rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  border-radius: 1px; border: none; cursor: pointer; transition: opacity .15s;
+}
+.common .card-gen-btn { background: rgba(140,90,20,.15); color: var(--sepia); border: 1px solid rgba(140,90,20,.25); }
+.rare .card-gen-btn { background: rgba(100,180,255,.15); color: rgba(150,210,255,.8); border: 1px solid rgba(100,180,255,.25); }
+.legendary .card-gen-btn { background: rgba(180,50,255,.15); color: rgba(200,130,255,.9); border: 1px solid rgba(180,50,255,.3); }
+.card-gen-btn:hover { opacity: .8; }
+
+/* Locked card */
+.crew-card.locked {
+  background: linear-gradient(160deg, #d8c898, #c8b478);
+  border: 1px solid rgba(140,90,20,.25); opacity: .55; filter: grayscale(.4);
+}
+.locked .card-portrait-ph { background: linear-gradient(160deg, #b8a060, #a08840); }
+.locked .ph-icon { opacity: .3; }
+.locked .card-name { color: rgba(90,55,15,.5); }
+.locked .card-rarity { color: rgba(90,55,15,.3); }
+.locked .card-role { color: rgba(90,55,15,.4); }
+.locked .card-req { font-family: 'Cormorant SC', serif; font-size: .52rem; letter-spacing: .08em; color: rgba(90,55,15,.45); margin-top: .25rem; }
+
+/* Loot & titles */
+.loot-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: .55rem; margin-bottom: 1.2rem; }
+.loot-item {
+  background: rgba(14,56,72,.08); border: 1px solid rgba(140,90,20,.2);
+  border-radius: 1px; padding: .5rem .35rem; text-align: center;
+}
+.loot-item.locked-loot { opacity: .35; filter: grayscale(.5); }
+.loot-icon { font-size: 1.3rem; margin-bottom: .2rem; }
+.loot-name { font-family: 'Cormorant SC', serif; font-size: .58rem; letter-spacing: .06em; color: var(--rust); margin-bottom: .12rem; }
+.loot-desc { font-family: 'IM Fell English', serif; font-style: italic; font-size: .62rem; color: rgba(90,55,15,.55); line-height: 1.4; }
+.title-list { display: flex; flex-direction: column; gap: .35rem; }
+.title-item { display: flex; align-items: baseline; gap: .5rem; padding: .3rem 0; border-bottom: 1px dashed rgba(140,90,20,.15); }
+.title-item:last-child { border-bottom: none; }
+.title-name { font-family: 'Cormorant SC', serif; font-size: .75rem; color: var(--rust); flex-shrink: 0; }
+.title-req { font-family: 'IM Fell English', serif; font-style: italic; font-size: .72rem; color: rgba(90,55,15,.5); }
+.title-item.locked-title { opacity: .4; }
+.title-item.earned-title .title-name { color: var(--gold); }
+.title-item.earned-title .title-name::before { content: '✦ '; font-size: .6rem; }
+
 </style>
 </head>
 <body>
@@ -612,6 +765,23 @@ input::placeholder, textarea::placeholder { font-family: 'IM Fell English', seri
   <button class="nav-btn" id="nav-progress" onclick="showScreen('progress')">
     <span class="ni">🗺</span><span class="nl">Ledger</span>
   </button>
+  <button class="nav-btn" id="nav-cargo" onclick="showScreen('cargo')">
+    <span class="ni">💰</span><span class="nl">Crew &amp; Cargo</span>
+  </button>
+</div>
+
+<!-- CREW & CARGO SCREEN -->
+  <div id="screen-cargo" class="screen">
+    <div class="parchment-page">
+      <div class="topbar">
+        <span class="topbar-sub">Crew &amp; Cargo</span>
+        <div class="topbar-right">
+          <button class="settings-btn" onclick="openSettings()">⚙</button>
+        </div>
+      </div>
+      <div id="cargo-content"></div>
+    </div>
+  </div>
 </div>
 
 <!-- RANK UP -->
@@ -685,20 +855,31 @@ let S = load();
 
 // ── RANKS ──
 const RANKS = [
-  {title:'Deckhand',      icon:'🪢', reqLabel:'Start here',               flavour:'Every voyage begins on someone else\'s deck.'},
-  {title:'Able Seaman',   icon:'⚓', reqLabel:'7 days logged',             flavour:'You know the ropes now. The crew has noticed.'},
-  {title:'Boatswain',     icon:'🧭', reqLabel:'20 days logged',            flavour:'You give the orders. Some of them are followed.'},
-  {title:'Quartermaster', icon:'⚖️', reqLabel:'35 days + 50k steps',       flavour:'The books are yours. So is the powder room.'},
-  {title:'First Mate',    icon:'🗡️', reqLabel:'50 days + 10 gym sessions', flavour:'One step from the wheel. The captain watches you.'},
-  {title:'Captain',       icon:'☠️', reqLabel:'70 days logged',            flavour:'The ship is yours. The sea is not.'},
-  {title:'Commodore',     icon:'🏴‍☠️', reqLabel:'91 days complete',          flavour:'They speak your name in ports you\'ve never visited.'},
+  {title:'Deckhand',           icon:'🪢', reqLabel:'Start here',                          flavour:'Every voyage begins on someone else\'s deck.'},
+  {title:'Able Seaman',        icon:'⚓', reqLabel:'7 days logged',                        flavour:'You know the ropes now. The crew has noticed.'},
+  {title:'Boatswain',          icon:'🧭', reqLabel:'20 days logged',                       flavour:'You give the orders. Some of them are followed.'},
+  {title:'Quartermaster',      icon:'⚖️', reqLabel:'35 days + 50k steps',                  flavour:'The books are yours. So is the powder room.'},
+  {title:'First Mate',         icon:'🗡️', reqLabel:'60 days + 15 gym sessions',            flavour:'One step from the wheel. The captain watches you.'},
+  {title:'Master',             icon:'📐', reqLabel:'90 days + 100k steps',                 flavour:'You know these waters. They do not frighten you.'},
+  {title:'Captain',            icon:'☠️', reqLabel:'120 days logged',                      flavour:'The ship is yours. The sea is not.'},
+  {title:'Commodore',          icon:'🏴‍☠️', reqLabel:'180 days + 30 gym sessions',         flavour:'They speak your name in ports you\'ve never visited.'},
+  {title:'Admiral',            icon:'⚜️', reqLabel:'270 days + 250k steps',                flavour:'Governments have begun to take an interest.'},
+  {title:'Admiral of the Fleet',icon:'👑', reqLabel:'365 days logged',                     flavour:'The sea is yours. You took it.'},
 ];
 function rankIndex() {
   const d=uniqueDays(), s=totalSteps(), g=totalGym();
-  if(d>=91)return 6; if(d>=70)return 5; if(d>=50&&g>=10)return 4;
-  if(d>=35&&s>=50000)return 3; if(d>=20)return 2; if(d>=7)return 1; return 0;
+  if(d>=365)return 9;
+  if(d>=270&&s>=250000)return 8;
+  if(d>=180&&g>=30)return 7;
+  if(d>=120)return 6;
+  if(d>=90&&s>=100000)return 5;
+  if(d>=60&&g>=15)return 4;
+  if(d>=35&&s>=50000)return 3;
+  if(d>=20)return 2;
+  if(d>=7)return 1;
+  return 0;
 }
-function checkRankUp() { const nr=rankIndex(); if(nr>S.rank){S.rank=nr;save();showRankUp(RANKS[nr]);} }
+function checkRankUp() { const nr=rankIndex(); if(nr>S.rank){S.rank=nr;save();showRankUp(RANKS[nr]);} checkAllMilestones(); }
 
 // ── HELPERS ──
 function today() { return new Date().toISOString().slice(0,10); }
@@ -727,12 +908,15 @@ function getANKey() { return localStorage.getItem('anthropic-key')||''; }
 
 // ── SHIP SVG ──
 function shipSVG(ri) {
-  const t=ri<=1?0:ri<=4?1:2;
-  const names=['A Battered Sloop','The Brigantine','Ship of the Line'];
+  const t=ri<=1?0:ri<=3?1:ri<=5?2:ri<=7?3:4;
+  const names=['A Rowing Boat','A Battered Sloop','The Brigantine','The Frigate','Ship of the Line'];
   const s0=`<svg width="150" height="85" viewBox="0 0 150 85" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="h" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a3420"/><stop offset="100%" stop-color="#1e0f06"/></linearGradient></defs><path d="M12 56 C30 50,60 47,80 47 C105 47,128 51,140 57 L134 67 C120 73,102 75,80 75 C58 75,38 73,20 67Z" fill="url(#h)"/><path d="M12 56 C30 50,60 47,80 47 C105 47,128 51,140 57" fill="none" stroke="#7a5035" stroke-width="1.2"/><rect x="52" y="10" width="3.5" height="39" rx="1" fill="#2a1508"/><rect x="82" y="6" width="3.8" height="43" rx="1" fill="#2a1508"/><line x1="38" y1="22" x2="64" y2="22" stroke="#3d2010" stroke-width="2.5" stroke-linecap="round"/><line x1="66" y1="14" x2="98" y2="14" stroke="#3d2010" stroke-width="3" stroke-linecap="round"/><line x1="68" y1="26" x2="96" y2="26" stroke="#3d2010" stroke-width="2.5" stroke-linecap="round"/><path d="M39 23 C46 20,57 20,63 23 L61 32 C55 35,46 35,41 32Z" fill="#d4c9a8" stroke="#a09070" stroke-width="0.7"/><path d="M67 15 C75 12,86 12,97 15 L95 25 C85 28,74 28,69 25Z" fill="#d4c9a8" stroke="#a09070" stroke-width="0.7"/><path d="M69 27 C77 24,87 24,95 27 L93 37 C86 40,78 40,71 37Z" fill="#cdc2a0" stroke="#a09070" stroke-width="0.7"/><g stroke="#1a0a04" stroke-width="0.8" opacity="0.65" fill="none"><line x1="54" y1="10" x2="16" y2="56"/><line x1="54" y1="10" x2="84" y2="56"/><line x1="84" y1="6" x2="54" y2="56"/><line x1="84" y1="6" x2="140" y2="54"/></g><g transform="translate(81 4)"><line x1="0" y1="0" x2="0" y2="12" stroke="#1a0a04" stroke-width="1"/><path d="M1 1 C6 0,11 1,15 3 C11 6,6 7,1 7Z" fill="#111"/><circle cx="5" cy="4" r="1.5" fill="#ece7da"/><circle cx="10" cy="4" r="1.5" fill="#ece7da"/><line x1="4" y1="6" x2="11" y2="2" stroke="#ece7da" stroke-width="0.9"/><line x1="4" y1="2" x2="11" y2="6" stroke="#ece7da" stroke-width="0.9"/></g><g fill="rgba(255,255,255,0.2)"><ellipse cx="28" cy="73" rx="11" ry="2.5"/><ellipse cx="80" cy="75" rx="19" ry="3"/><ellipse cx="130" cy="73" rx="11" ry="2.5"/></g></svg>`;
   const s1=`<svg width="175" height="95" viewBox="0 0 175 95" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="h1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a3420"/><stop offset="50%" stop-color="#3d2210"/><stop offset="100%" stop-color="#1e0f06"/></linearGradient></defs><path d="M8 62 C26 55,52 51,88 50 C122 49,152 54,166 61 L160 71 C144 79,118 82,88 82 C56 82,30 79,14 71Z" fill="url(#h1)"/><path d="M8 62 C26 55,52 51,88 50 C122 49,152 54,166 61" fill="none" stroke="#7a5035" stroke-width="1.4"/><path d="M14 57 C26 46,34 36,40 30 L58 30 C63 30,66 36,68 46 L72 59Z" fill="#3a1e0e"/><g fill="#c8a855" opacity="0.8"><rect x="22" y="40" width="4" height="7" rx="1"/><rect x="29" y="38" width="4" height="8" rx="1"/><rect x="36" y="38" width="4" height="8" rx="1"/></g><rect x="48" y="6" width="4" height="46" rx="1.5" fill="#2a1508"/><rect x="82" y="2" width="4.5" height="50" rx="1.5" fill="#2a1508"/><rect x="116" y="16" width="3.5" height="44" rx="1.5" fill="#2a1508"/><g stroke="#3d2010" stroke-linecap="round"><line x1="32" y1="18" x2="63" y2="18" stroke-width="2.5"/><line x1="34" y1="30" x2="61" y2="30" stroke-width="2"/><line x1="62" y1="10" x2="104" y2="10" stroke-width="3"/><line x1="64" y1="22" x2="102" y2="22" stroke-width="2.5"/><line x1="66" y1="34" x2="100" y2="34" stroke-width="2"/><line x1="97" y1="26" x2="128" y2="26" stroke-width="2.5"/><line x1="99" y1="38" x2="126" y2="38" stroke-width="2"/></g><path d="M33 19 C40 16,53 16,62 19 L60 29 C53 32,40 32,35 29Z" fill="#d4c9a8" stroke="#a09070" stroke-width="0.7"/><path d="M63 11 C72 8,88 8,103 11 L101 21 C87 24,71 24,65 21Z" fill="#d4c9a8" stroke="#a09070" stroke-width="0.7"/><path d="M65 23 C73 20,88 20,101 23 L99 33 C87 36,73 36,67 33Z" fill="#cdc2a0" stroke="#a09070" stroke-width="0.7"/><path d="M98 27 C105 24,115 24,127 27 L125 37 C116 40,106 40,100 37Z" fill="#cdc2a0" stroke="#a09070" stroke-width="0.7"/><g stroke="#1a0a04" stroke-width="0.85" opacity="0.7" fill="none"><line x1="50" y1="6" x2="16" y2="60"/><line x1="50" y1="6" x2="84" y2="60"/><line x1="84" y1="2" x2="50" y2="60"/><line x1="84" y1="2" x2="118" y2="60"/><line x1="84" y1="2" x2="170" y2="58"/><line x1="118" y1="16" x2="86" y2="60"/><line x1="118" y1="16" x2="151" y2="57"/></g><g transform="translate(81 0)"><line x1="0" y1="0" x2="0" y2="14" stroke="#1a0a04" stroke-width="1.1"/><path d="M1 1 C7 -1,13 1,19 4 C13 8,7 9,1 9Z" fill="#0a0a0a"/><circle cx="6" cy="5" r="1.9" fill="#ece7da"/><circle cx="13" cy="5" r="1.9" fill="#ece7da"/><line x1="5" y1="7" x2="14" y2="2" stroke="#ece7da" stroke-width="0.9"/><line x1="5" y1="2" x2="14" y2="7" stroke="#ece7da" stroke-width="0.9"/></g><g fill="rgba(255,255,255,0.22)"><ellipse cx="20" cy="81" rx="10" ry="3"/><ellipse cx="88" cy="83" rx="21" ry="3.5"/><ellipse cx="154" cy="81" rx="11" ry="3"/></g></svg>`;
   const s2=`<svg width="195" height="105" viewBox="0 0 195 105" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="h2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a3420"/><stop offset="50%" stop-color="#3d2210"/><stop offset="100%" stop-color="#1e0f06"/></linearGradient></defs><path d="M6 69 C22 61,50 56,97 55 C144 54,172 60,188 68 L182 79 C164 88,134 91,97 91 C60 91,30 88,12 79Z" fill="url(#h2)"/><path d="M6 69 C22 61,50 56,97 55 C144 54,172 60,188 68" fill="none" stroke="#7a5035" stroke-width="1.5"/><path d="M12 63 C16 49,22 37,30 31 L52 31 C57 31,60 37,63 49 L66 65Z" fill="#3a1e0e"/><g fill="#c8a855" opacity="0.82"><rect x="18" y="41" width="5" height="8" rx="1"/><rect x="26" y="39" width="5" height="9" rx="1"/><rect x="34" y="39" width="5" height="9" rx="1"/><rect x="42" y="41" width="5" height="8" rx="1"/></g><g fill="#0d0603" stroke="#2a1508" stroke-width="0.5"><rect x="26" y="70" width="7" height="5" rx="1"/><rect x="38" y="68" width="7" height="5" rx="1"/><rect x="52" y="67" width="7" height="5" rx="1"/><rect x="66" y="66" width="7" height="5" rx="1"/><rect x="81" y="66" width="7" height="5" rx="1"/><rect x="97" y="66" width="7" height="5" rx="1"/><rect x="113" y="67" width="7" height="5" rx="1"/><rect x="129" y="68" width="7" height="5" rx="1"/></g><rect x="42" y="6" width="4.5" height="52" rx="1.5" fill="#2a1508"/><rect x="78" y="1" width="5" height="56" rx="1.5" fill="#2a1508"/><rect x="116" y="14" width="4" height="50" rx="1.5" fill="#2a1508"/><g stroke="#3d2010" stroke-linecap="round"><line x1="24" y1="18" x2="58" y2="18" stroke-width="3"/><line x1="26" y1="30" x2="56" y2="30" stroke-width="2.5"/><line x1="26" y1="42" x2="54" y2="42" stroke-width="2"/><line x1="56" y1="10" x2="104" y2="10" stroke-width="3.5"/><line x1="58" y1="22" x2="102" y2="22" stroke-width="3"/><line x1="60" y1="34" x2="100" y2="34" stroke-width="2.5"/><line x1="62" y1="46" x2="98" y2="46" stroke-width="2"/><line x1="96" y1="24" x2="130" y2="24" stroke-width="2.5"/><line x1="98" y1="36" x2="128" y2="36" stroke-width="2"/></g><path d="M25 19 C34 16,48 16,57 19 L55 29 C46 32,34 32,27 29Z" fill="#d4c9a8" stroke="#a09070" stroke-width="0.7"/><path d="M27 31 C35 28,47 28,55 31 L53 41 C45 44,35 44,29 41Z" fill="#cdc2a0" stroke="#a09070" stroke-width="0.7"/><path d="M57 11 C68 8,86 8,103 11 L101 21 C84 24,67 24,59 21Z" fill="#d4c9a8" stroke="#a09070" stroke-width="0.7"/><path d="M59 23 C69 20,85 20,101 23 L99 33 C84 36,68 36,61 33Z" fill="#cdc2a0" stroke="#a09070" stroke-width="0.7"/><path d="M61 35 C70 32,85 32,99 35 L97 45 C84 48,70 48,63 45Z" fill="#c4ba9e" stroke="#a09070" stroke-width="0.7"/><path d="M97 25 C106 22,116 22,129 25 L127 35 C116 38,106 38,99 35Z" fill="#cdc2a0" stroke="#a09070" stroke-width="0.7"/><g stroke="#1a0a04" stroke-width="0.9" opacity="0.7" fill="none"><line x1="44" y1="6" x2="12" y2="65"/><line x1="44" y1="6" x2="80" y2="65"/><line x1="80" y1="1" x2="44" y2="65"/><line x1="80" y1="1" x2="118" y2="64"/><line x1="80" y1="1" x2="190" y2="64"/><line x1="118" y1="14" x2="82" y2="65"/><line x1="118" y1="14" x2="154" y2="62"/></g><g transform="translate(77 -1)"><line x1="0" y1="0" x2="0" y2="16" stroke="#1a0a04" stroke-width="1.2"/><path d="M1 1 C8 -1,15 1,21 4 C15 9,8 10,1 10Z" fill="#0a0a0a"/><circle cx="7" cy="5" r="2.1" fill="#ece7da"/><circle cx="14" cy="5" r="2.1" fill="#ece7da"/><line x1="6" y1="8" x2="15" y2="2" stroke="#ece7da" stroke-width="1"/><line x1="6" y1="2" x2="15" y2="8" stroke="#ece7da" stroke-width="1"/></g><g fill="rgba(255,255,255,0.22)"><ellipse cx="18" cy="90" rx="10" ry="3"/><ellipse cx="97" cy="92" rx="25" ry="3.5"/><ellipse cx="175" cy="90" rx="13" ry="3"/></g></svg>`;
-  return {name:names[t], svg:[s0,s1,s2][t]};
+  // tier 3: frigate (similar to brigantine but wider)
+  const s3 = s1.replace('width="175" height="95" viewBox="0 0 175 95"','width="185" height="100" viewBox="0 0 185 100"');
+  // tier 4: ship of the line (reuse s2)
+  return {name:names[t], svg:[s0,s0,s1,s2,s2][t]};
 }
 
 // ── LOG FORM STATE ──
@@ -753,6 +937,7 @@ function showScreen(name) {
   if(name==='home')renderHome();
   if(name==='logbook')renderLogbook(0);
   if(name==='progress')renderProgress();
+  if(name==='cargo'){checkAllMilestones();renderCargo();}
 }
 function openLog() {
   // date-duplicate check handled in submitLog
@@ -797,7 +982,7 @@ function submitLog() {
   const entryDate = document.getElementById('log-entry-date').value || today();
   if(S.entries.some(e=>e.date===entryDate)){if(!confirm('Already have an entry for '+fictDate(entryDate)+'. Add another?'))return;}
   S.entries.push({date:entryDate,steps,mins,gym,morning,lunch,evening,desk,weather:selW,water:selWtr,weight,reflection,gratitude:[g1,g2,g3].filter(Boolean)});
-  save(); checkRankUp(); checkWantedMilestone(); checkWeeklyDispatch();
+  save(); checkRankUp(); checkAllMilestones(); checkWantedMilestone(); checkWeeklyDispatch();
   closeLog(); showScreen('home');
 }
 
@@ -876,7 +1061,11 @@ function useFreeze(){
   S.streakFreezes--;if(!S.frozenDates)S.frozenDates=[];S.frozenDates.push(y);save();updateKeyStatus();
 }
 function exportLog(){
-  const lines=["THE CAPTAIN'S LOG",S.charName,'','─'.repeat(50),''];
+  const version = '2.0';
+  const exportDate = new Date().toISOString();
+  const lines=["THE CAPTAIN'S LOG",S.charName,
+    'Exported: '+exportDate,'Version: '+version,
+    'Entries: '+S.entries.length,'','─'.repeat(50),''];
   [...S.entries].reverse().forEach(e=>{
     lines.push(fictDate(e.date)+' '+e.weather);
     if(e.steps)lines.push('Steps: '+e.steps.toLocaleString());
@@ -886,8 +1075,186 @@ function exportLog(){
   });
   const blob=new Blob([lines.join('\n')],{type:'text/plain'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='captains-log-'+today()+'.txt';a.click();
+  // Also offer JSON export for future imports
+  const jsonData = {...S, exportDate, exportVersion: version, exportedAt: exportDate};
+  const jsonBlob = new Blob([JSON.stringify(jsonData, null, 2)], {type:'application/json'});
+  const b=document.createElement('a');b.href=URL.createObjectURL(jsonBlob);b.download='captains-log-'+today()+'.json';
+  setTimeout(()=>b.click(), 500);
 }
 function confirmReset(){if(!confirm('Delete all data?'))return;[KEY,'captains-log-v1','captains-log-v2','captains-log-v3','captains-log-v4'].forEach(k=>localStorage.removeItem(k));S=fresh();save();location.reload();}
+
+// ── CREW, LOOT, TITLES DATA ──
+const CREW = [
+  { id:'cook',    name:'Maggie Vane',    role:'Ship\'s Cook',     rarity:'common',    icon:'👩‍🍳', gender:'f',
+    req:'10 entries logged', reqFn:()=>S.entries.length>=10,
+    flavour:"She feeds the crew without complaint. The stew is always hot.",
+    prompt:'Ship cook woman 1690s golden age piracy woodcut engraving illustration style bold ink lines sepia tones period accurate clothing warm expression kitchen setting no text no border' },
+  { id:'nav',     name:'Thomas Quirk',   role:'Navigator',        rarity:'common',    icon:'🧭', gender:'m',
+    req:'First 10,000 step day', reqFn:()=>S.entries.some(e=>e.steps>=10000),
+    flavour:"He has never been lost. He has been surprised, but never lost.",
+    prompt:'Male navigator sailor 1690s golden age piracy woodcut engraving illustration style bold ink lines sepia tones charts compass period accurate no text no border' },
+  { id:'carp',    name:'Rosa Pale',      role:'Carpenter',        rarity:'common',    icon:'🔨', gender:'f',
+    req:'10 gym sessions', reqFn:()=>S.entries.filter(e=>e.gym).length>=10,
+    flavour:"She keeps the ship together through sheer stubbornness.",
+    prompt:'Female ship carpenter 1690s golden age piracy woodcut engraving style bold ink lines sepia period accurate tools strong capable no text no border' },
+  { id:'surg',    name:'Dr. Ines Marta', role:'Surgeon',          rarity:'rare',      icon:'⚕️', gender:'f',
+    req:'30 days logged', reqFn:()=>new Set(S.entries.map(e=>e.date)).size>=30,
+    flavour:"She has saved lives she was not sure deserved saving.",
+    prompt:'Female ship surgeon doctor 1690s golden age piracy dramatic ink illustration style dark background medical instruments period accurate intense focused no text no border' },
+  { id:'gun',     name:'Caleb Shore',    role:'Gunner',           rarity:'rare',      icon:'💣', gender:'m',
+    req:'50,000 total steps', reqFn:()=>S.entries.reduce((a,e)=>a+(e.steps||0),0)>=50000,
+    flavour:"He loves the cannon more than any person alive.",
+    prompt:'Male ship gunner 1690s golden age piracy dramatic ink illustration dark background cannon powder period accurate weathered dangerous no text no border' },
+  { id:'bosun',   name:'Nell Farro',     role:'Bosun',            rarity:'rare',      icon:'⚓', gender:'f',
+    req:'50 entries logged', reqFn:()=>S.entries.length>=50,
+    flavour:"The crew jumps before she finishes the order.",
+    prompt:'Female bosun first mate 1690s golden age piracy dramatic ink illustration dark background ropes rigging period accurate commanding presence no text no border' },
+  { id:'mate',    name:'Kit Draven',     role:'First Mate',       rarity:'legendary', icon:'🗡️', gender:'f',
+    req:'100 days logged', reqFn:()=>new Set(S.entries.map(e=>e.date)).size>=100,
+    flavour:"She is the only one on this ship who frightens you a little.",
+    prompt:'Female first mate pirate 1690s golden age piracy neon noir dark illustration style dramatic lighting teal and purple tones cinematic powerful no text no border' },
+  { id:'qm',      name:'Marcus Bell',    role:'Quartermaster',    rarity:'legendary', icon:'⚖️', gender:'m',
+    req:'180 days logged', reqFn:()=>new Set(S.entries.map(e=>e.date)).size>=180,
+    flavour:"He keeps the books. He keeps secrets better.",
+    prompt:'Male quartermaster 1690s golden age piracy neon noir dark illustration style dramatic neon lighting deep shadows mysterious ledger period accurate no text no border' },
+];
+
+const LOOT = [
+  { id:'compass',  icon:'🧭', name:'Brass Compass',       desc:'It does not always point north.',           reqFn:()=>S.entries.length>=1 },
+  { id:'flask',    icon:'🥃', name:'Silver Flask',         desc:'First week streak.',                        reqFn:()=>calcStreak()>=7 },
+  { id:'chart',    icon:'🗺', name:'Mediterranean Chart',  desc:'25,000 steps logged.',                      reqFn:()=>S.entries.reduce((a,e)=>a+(e.steps||0),0)>=25000 },
+  { id:'marque',   icon:'📜', name:'Letter of Marque',     desc:'Promoted to Master.',                       reqFn:()=>rankIndex()>=5 },
+  { id:'cutlass',  icon:'⚔️', name:'Fine Cutlass',         desc:'100 gym sessions.',                         reqFn:()=>S.entries.filter(e=>e.gym).length>=100 },
+  { id:'spyglass', icon:'🔭', name:'Spyglass',             desc:'50 entries logged.',                        reqFn:()=>S.entries.length>=50 },
+  { id:'map',      icon:'🏝', name:'Chart of the Indies',  desc:'100,000 steps logged.',                     reqFn:()=>S.entries.reduce((a,e)=>a+(e.steps||0),0)>=100000 },
+  { id:'flag',     icon:'🏴‍☠️', name:'The Black Flag',      desc:'91 days logged.',                           reqFn:()=>new Set(S.entries.map(e=>e.date)).size>=91 },
+  { id:'ring',     icon:'💍', name:'Gold Signet Ring',     desc:'365 days logged.',                          reqFn:()=>new Set(S.entries.map(e=>e.date)).size>=365 },
+];
+
+const TITLES = [
+  { id:'t1', name:'The Unthirsty',   req:'50 water logs',          reqFn:()=>S.entries.filter(e=>e.water>0).length>=50 },
+  { id:'t2', name:'Dawn Watch',      req:'20 morning walks',       reqFn:()=>S.entries.filter(e=>e.morning).length>=20 },
+  { id:'t3', name:'The Wanderer',    req:'50 lunch walks',         reqFn:()=>S.entries.filter(e=>e.lunch).length>=50 },
+  { id:'t4', name:'Iron Hull',       req:'30 gym sessions',        reqFn:()=>S.entries.filter(e=>e.gym).length>=30 },
+  { id:'t5', name:'Night Sailor',    req:'20 evening walks',       reqFn:()=>S.entries.filter(e=>e.evening).length>=20 },
+  { id:'t6', name:'The Grateful',    req:'30 gratitude entries',   reqFn:()=>S.entries.filter(e=>e.gratitude?.length>0).length>=30 },
+  { id:'t7', name:'Standing Watch',  req:'20 standing desk days',  reqFn:()=>S.entries.filter(e=>e.desk).length>=20 },
+  { id:'t8', name:'Centurion',       req:'100 entries logged',     reqFn:()=>S.entries.length>=100 },
+];
+
+function checkAllMilestones() {
+  // Check crew unlocks
+  if (!S.unlockedCrew) S.unlockedCrew = [];
+  CREW.forEach(c => { if(c.reqFn() && !S.unlockedCrew.includes(c.id)) { S.unlockedCrew.push(c.id); showCrewUnlock(c); } });
+  // Check loot
+  if (!S.unlockedLoot) S.unlockedLoot = [];
+  LOOT.forEach(l => { if(l.reqFn() && !S.unlockedLoot.includes(l.id)) { S.unlockedLoot.push(l.id); } });
+  // Check titles
+  if (!S.unlockedTitles) S.unlockedTitles = [];
+  TITLES.forEach(t => { if(t.reqFn() && !S.unlockedTitles.includes(t.id)) { S.unlockedTitles.push(t.id); } });
+  save();
+}
+
+function showCrewUnlock(crew) {
+  const ol = document.getElementById('rankup-overlay');
+  document.getElementById('ru-icon').textContent = crew.icon;
+  document.getElementById('ru-title').textContent = crew.name+' joins the crew';
+  document.getElementById('ru-flavour').textContent = crew.role+' — '+crew.flavour;
+  ol.classList.add('show');
+}
+
+async function generateCrewPortrait(crewId) {
+  const key = getRWKey();
+  if (!key) { alert('Add Runware key in settings first.'); return; }
+  const crew = CREW.find(c => c.id === crewId);
+  if (!crew) return;
+  const btn = document.getElementById('gen-btn-'+crewId);
+  if (btn) { btn.textContent = 'Generating…'; btn.disabled = true; }
+  try {
+    const res = await fetch('https://api.runware.ai/v1', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer '+key },
+      body: JSON.stringify([{
+        taskType: 'imageInference', taskUUID: crypto.randomUUID(),
+        positivePrompt: crew.prompt,
+        negativePrompt: 'modern photograph anime cartoon text watermark',
+        model: 'runware:101@1',
+        width: crew.rarity==='legendary'?512:384,
+        height: crew.rarity==='legendary'?512:480,
+        numberResults: 1, outputType: 'URL', outputFormat: 'WEBP',
+        steps: crew.rarity==='legendary'?32:26, CFGScale: 7
+      }])
+    });
+    if (!res.ok) { alert('Runware error: '+res.status); return; }
+    const data = await res.json();
+    const url = data.data?.[0]?.imageURL;
+    if (url) {
+      if (!S.crewPortraits) S.crewPortraits = {};
+      S.crewPortraits[crewId] = url; save();
+      renderCargo();
+    }
+  } catch(e) { alert('Failed: '+e.message); }
+  finally { if(btn) { btn.textContent = '✦ Generate portrait'; btn.disabled = false; } }
+}
+
+// ── RENDER CARGO ──
+function renderCargo() {
+  if (!S.unlockedCrew) S.unlockedCrew = [];
+  if (!S.unlockedLoot) S.unlockedLoot = [];
+  if (!S.unlockedTitles) S.unlockedTitles = [];
+  const el = document.getElementById('cargo-content');
+
+  // Crew cards
+  const crewHTML = '<div class="section-head">Crew</div><div class="crew-grid">' +
+    CREW.map(c => {
+      const unlocked = S.unlockedCrew.includes(c.id);
+      const portrait = S.crewPortraits?.[c.id];
+      if (!unlocked) {
+        return `<div class="crew-card locked">
+          <div class="card-portrait"><div class="card-portrait-ph"><span class="ph-icon">🔒</span><span class="ph-text">${c.req}</span></div></div>
+          <div class="card-body"><div class="card-rarity">${c.rarity}</div><div class="card-name">???</div><div class="card-role">${c.role}</div><div class="locked-card-req">${c.req}</div></div>
+        </div>`;
+      }
+      const portraitHTML = portrait
+        ? `<img src="${portrait}" alt="${c.name}"/>`
+        : `<div class="card-portrait-ph"><span class="ph-icon">${c.icon}</span><span class="ph-text">No portrait yet</span></div>`;
+      const genBtn = !portrait && getRWKey()
+        ? `<button class="card-gen-btn" id="gen-btn-${c.id}" onclick="generateCrewPortrait('${c.id}')">✦ Generate portrait</button>` : '';
+      return `<div class="crew-card ${c.rarity}">
+        <div class="card-portrait">${portraitHTML}</div>
+        <div class="card-body">
+          <div class="card-rarity">${c.rarity}</div>
+          <div class="card-name">${c.name}</div>
+          <div class="card-role">${c.role}</div>
+          <div class="card-flavour">${c.flavour}</div>
+          ${genBtn}
+        </div>
+      </div>`;
+    }).join('') + '</div>';
+
+  // Loot
+  const lootHTML = '<div class="section-head">Cargo Hold</div><div class="loot-grid">' +
+    LOOT.map(l => {
+      const have = S.unlockedLoot.includes(l.id);
+      return `<div class="loot-item ${have?'':'locked-loot'}">
+        <div class="loot-icon">${l.icon}</div>
+        <div class="loot-name">${have?l.name:'???'}</div>
+        <div class="loot-desc">${have?l.desc:l.reqFn?'Not yet earned':''}</div>
+      </div>`;
+    }).join('') + '</div>';
+
+  // Titles
+  const titlesHTML = '<div class="section-head">Titles</div><div class="title-list">' +
+    TITLES.map(t => {
+      const earned = S.unlockedTitles.includes(t.id);
+      return `<div class="title-item ${earned?'earned-title':'locked-title'}">
+        <span class="title-name">${t.name}</span>
+        <span class="title-req">${t.req}</span>
+      </div>`;
+    }).join('') + '</div>';
+
+  el.innerHTML = crewHTML + lootHTML + titlesHTML;
+}
 
 // ── RENDER HOME ──
 function renderHome(){
@@ -896,7 +1263,9 @@ function renderHome(){
   const repPct=Math.min(100,Math.round((rep/repNext)*100));
   document.getElementById('rank-badge').textContent=rank.title;
   const el=document.getElementById('home-content');
-  const ship=shipSVG(ri);
+  const shipSteps=totalSteps();
+  const shipTierBySteps=shipSteps>=500000?4:shipSteps>=200000?3:shipSteps>=75000?2:shipSteps>=15000?1:0;
+  const ship=shipSVG(shipTierBySteps);
   if(!S.entries.length){
     el.innerHTML=`<div class="home-empty"><div class="empty-icon">⚓</div><div class="empty-title">The log is empty.</div><div class="empty-body">Every voyage begins with a first entry. Tap the anchor below.</div></div>`;
     return;
@@ -921,7 +1290,14 @@ function renderHome(){
     <div class="ship-display">
       <div class="ship-name">${ship.name}</div>
       <div style="display:flex;justify-content:center;">${ship.svg}</div>
-      <div class="ship-tier-label">${ri<2?'Log consistently to earn a better vessel':'A fine vessel.'}</div>
+      <div class="ship-tier-label">${(()=>{
+        const steps=totalSteps();
+        if(steps<15000)return 'Need '+(15000-steps).toLocaleString()+' more steps to upgrade';
+        if(steps<75000)return 'Need '+(75000-steps).toLocaleString()+' more steps to upgrade';
+        if(steps<200000)return 'Need '+(200000-steps).toLocaleString()+' more steps to upgrade';
+        if(steps<500000)return 'Need '+(500000-steps).toLocaleString()+' more steps to upgrade';
+        return 'Finest vessel on the sea.';
+      })()}</div>
     </div>
     <div class="stats-row">
       <div class="stat-chip"><span class="stat-n">${calcStreak()}</span><span class="stat-l">streak</span></div>
