@@ -14,16 +14,12 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;font-family:'Cormorant',serif;background:var(--night);color:var(--ink);overscroll-behavior:none;}
-#bg{position:fixed;inset:0;z-index:0;transition:background 6s ease;
-  background:radial-gradient(ellipse at 25% 0%,#0a1828 0%,transparent 55%),
-  linear-gradient(180deg,#020508 0%,#051018 35%,#081828 65%,#0a1e30 100%);}
-#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
-#moon{position:fixed;top:7%;right:12%;z-index:2;width:50px;height:50px;border-radius:50%;pointer-events:none;
-  background:radial-gradient(circle at 38% 35%,#fffae8,#f0e080 45%,#c0a020 70%,transparent 85%);
-  box-shadow:0 0 24px 5px rgba(230,190,60,.18),0 0 80px 18px rgba(230,190,60,.08);transition:opacity 5s ease;}
-#waves{position:fixed;bottom:0;left:0;right:0;height:65px;z-index:3;overflow:hidden;pointer-events:none;}
-#waves svg{width:200%;animation:ws 12s linear infinite;}
-@keyframes ws{to{transform:translateX(-50%);}}
+body{background:#06101a;}
+
+
+
+
+
 #root{position:fixed;top:0;left:0;right:0;bottom:60px;z-index:10;display:flex;flex-direction:column;}
 .screen{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .35s ease;backdrop-filter:none;-webkit-backdrop-filter:none;}
 .screen.active{opacity:1;pointer-events:all;}
@@ -268,27 +264,11 @@ input::placeholder,textarea::placeholder{font-family:'IM Fell English',serif;fon
 .log-fab .fab-icon{font-size:1.25rem;color:rgba(240,218,160,.9);}
 .log-fab:hover{background:var(--ocean-lt);transform:translateY(-2px);}
 .log-fab:active{transform:translateY(0);}
-#offline-badge{display:none;position:fixed;top:.75rem;left:50%;transform:translateX(-50%);background:rgba(90,20,5,.92);color:rgba(240,218,160,.95);padding:.24rem .85rem;border-radius:1px;z-index:200;font-family:'Cormorant SC',serif;font-size:.56rem;letter-spacing:.1em;box-shadow:0 2px 8px rgba(0,0,0,.5);}
+
 @media(max-width:380px){.page-scroll{padding:1rem 1.1rem 5rem;}}
 </style>
 <body>
-<div id="bg"></div>
-<canvas id="stars" style="position:fixed;inset:0;z-index:1;pointer-events:none;"></canvas>
-<div id="moon"></div>
-<svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="position:fixed;bottom:0;left:0;right:0;z-index:2;height:38%;pointer-events:none;will-change:auto;">
-  <defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a2030" stop-opacity="0.65"/><stop offset="100%" stop-color="#040e18" stop-opacity="1"/></linearGradient></defs>
-  <rect width="360" height="200" fill="url(#sg)"/>
-  <path d="M0 35 C60 31,120 38,180 34 C240 30,300 37,360 33" fill="none" stroke="rgba(180,150,60,.06)" stroke-width="1"/>
-  <path d="M0 55 C50 50,100 58,150 53 C200 48,250 56,300 51 C330 48,350 54,360 51" fill="none" stroke="rgba(160,200,220,.055)" stroke-width="1.5"/>
-  <path d="M0 80 C40 75,85 83,130 78 C175 73,220 81,265 76 C300 72,335 79,360 75" fill="none" stroke="rgba(140,190,210,.05)" stroke-width="2"/>
-  <path d="M0 120 C45 112,95 124,145 116 C195 108,245 120,295 113 C322 108,345 118,360 114 L360 200 L0 200Z" fill="rgba(5,14,24,.95)"/>
-  <path d="M0 150 C55 140,115 154,175 146 C235 138,295 151,360 144 L360 200 L0 200Z" fill="rgba(3,8,16,.99)"/>
-</svg>
-<div id="waves"><svg viewBox="0 0 1440 65" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:200%;animation:ws 12s linear infinite;">
-  <path d="M0,30 C180,55 360,8 540,30 C720,52 900,8 1080,30 C1260,52 1350,18 1440,30 L1440,65 L0,65Z" fill="#060e18" opacity="0.92"/>
-  <path d="M0,44 C200,28 420,50 600,38 C800,26 1020,46 1200,36 C1320,29 1385,42 1440,38 L1440,65 L0,65Z" fill="#030810" opacity="0.97"/>
-</svg></div>
-<div id="offline-badge">OFFLINE</div>
+
 <div id="root">
   <div id="screen-home" class="screen active">
     <div class="topbar">
@@ -324,7 +304,7 @@ input::placeholder,textarea::placeholder{font-family:'IM Fell English',serif;fon
     </div>
   </div>
 </div>
-<div id="screen-log" class="screen" style="position:fixed;z-index:110;">
+<div id="screen-log" class="screen" style="position:fixed;z-index:110;pointer-events:none;">
   <div style="position:absolute;inset:0;" onclick="closeLog()"></div>
   <div class="log-sheet">
     <div class="sheet-handle"></div>
@@ -498,12 +478,7 @@ function getRunwareKey(){return localStorage.getItem('runware-key')||'';}
 function getAnthropicKey(){return localStorage.getItem('anthropic-key')||'';}
 
 // Stars
-(function(){
-  const c=document.getElementById('stars');
-  function resize(){c.width=window.innerWidth;c.height=window.innerHeight;draw();}
-  function draw(){const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);for(let i=0;i<100;i++){const x=Math.random()*c.width,y=Math.random()*c.height*.55,r=Math.random()*1.1+.2,a=Math.random()*.65+.2;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=`rgba(255,248,220,${a})`;ctx.fill();}}
-  resize();window.addEventListener('resize',resize);
-})();
+
 
 // Ship SVGs
 function shipSVG(ri){
@@ -519,7 +494,7 @@ function shipSVG(ri){
 
 let selectedWeather='⛵';
 let selectedWater=0;
-function selectWeather(btn){document.querySelectorAll('.weather-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedWeather=btn.dataset.weather;updateBgMood();}
+function selectWeather(btn){document.querySelectorAll('.weather-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedWeather=btn.dataset.weather;}
 function setWater(n){selectedWater=n;document.querySelectorAll('.water-btn').forEach((b,i)=>b.classList.toggle('active',i+1===n));}
 function updateBgMood(){
   const bg=document.getElementById('bg'),moon=document.getElementById('moon');
@@ -538,7 +513,7 @@ function showScreen(name){
   if(name==='logbook')renderLogbook(0);
   if(name==='progress')renderProgress();
 }
-function openLog(){
+function openLog(){document.getElementById('screen-log').style.pointerEvents='all';
   if(todayLogged()){if(!confirm('Already logged today. Add another entry?'))return;}
   document.getElementById('screen-log').classList.add('active');
   document.getElementById('log-date-hdr').textContent=fictDate(today());
@@ -548,7 +523,7 @@ function openLog(){
   document.querySelectorAll('.water-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('log-error').style.display='none';
 }
-function closeLog(){
+function closeLog(){document.getElementById('screen-log').style.pointerEvents='none';
   document.getElementById('screen-log').classList.remove('active');
   ['l-steps','l-mins','l-weight','l-reflection','l-g1','l-g2','l-g3'].forEach(id=>document.getElementById(id).value='');
   ['l-gym','l-morning','l-lunch','l-evening','l-desk'].forEach(id=>document.getElementById(id).checked=false);
@@ -845,12 +820,10 @@ function renderProgress(){
     ${wantedHTML}`;
 }
 
-window.addEventListener('offline',()=>document.getElementById('offline-badge').style.display='block');
-window.addEventListener('online',()=>document.getElementById('offline-badge').style.display='none');
-if(!navigator.onLine)document.getElementById('offline-badge').style.display='block';
+
 if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});
 
 renderHome();
 updateKeyStatus();
 </script>
-</html>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
