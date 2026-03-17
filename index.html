@@ -1179,8 +1179,8 @@ async function generateCrewPortrait(crewId) {
         positivePrompt: crew.prompt,
         negativePrompt: 'modern photograph anime cartoon text watermark',
         model: 'runware:101@1',
-        width: crew.rarity==='legendary'?512:384,
-        height: crew.rarity==='legendary'?512:480,
+        width: 512,
+        height: crew.rarity==='legendary'?512:640,
         numberResults: 1, outputType: 'URL', outputFormat: 'WEBP',
         steps: crew.rarity==='legendary'?32:26, CFGScale: 7
       }])
