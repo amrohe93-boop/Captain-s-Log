@@ -535,6 +535,10 @@ input::placeholder, textarea::placeholder { font-family: 'IM Fell English', seri
 <div id="log-sheet">
   <div class="sheet-handle"></div>
   <div class="log-date" id="log-date"></div>
+  <div style="text-align:center;margin-bottom:.7rem;">
+    <label style="font-family:'IM Fell English',serif;font-style:italic;font-size:.78rem;color:rgba(90,55,15,.5);margin-right:.4rem;">Logging for</label>
+    <input type="date" id="log-entry-date" max="" style="width:auto;display:inline-block;font-size:.88rem;padding:.28rem .5rem;border:1px solid rgba(140,90,20,.28);background:rgba(255,255,255,.35);font-family:'Cormorant SC',serif;" onchange="updateLogDate()"/>
+  </div>
   <div class="error-msg" id="log-error" style="display:none"></div>
 
   <div class="log-section">
@@ -733,6 +737,10 @@ function shipSVG(ri) {
 
 // ── LOG FORM STATE ──
 let selW = '⛵', selWtr = 0;
+function updateLogDate(){
+  const v = document.getElementById('log-entry-date').value;
+  if(v) document.getElementById('log-date').textContent = fictDate(v);
+}
 function selWeather(btn) { document.querySelectorAll('.weather-btn').forEach(b=>b.classList.remove('sel')); btn.classList.add('sel'); selW=btn.dataset.w; }
 function selWater(n) { selWtr=n; document.querySelectorAll('.water-btn').forEach((b,i)=>b.classList.toggle('sel',i+1===n)); }
 
@@ -747,9 +755,12 @@ function showScreen(name) {
   if(name==='progress')renderProgress();
 }
 function openLog() {
-  if(S.entries.some(e=>e.date===today())) if(!confirm('Already logged today. Add another?')) return;
+  // date-duplicate check handled in submitLog
   document.getElementById('log-sheet').classList.add('open');
-  document.getElementById('log-date').textContent = fictDate(today());
+  const todayStr = today();
+  document.getElementById('log-entry-date').value = todayStr;
+  document.getElementById('log-entry-date').max = todayStr;
+  document.getElementById('log-date').textContent = fictDate(todayStr);
   document.getElementById('log-error').style.display='none';
   selW='⛵'; selWtr=0;
   document.querySelectorAll('.weather-btn').forEach(b=>b.classList.remove('sel'));
@@ -783,7 +794,9 @@ function submitLog() {
   err.style.display='none';
   if(!steps&&!mins&&!gym&&!reflection&&!g1){err.textContent='Log something before sealing the entry.';err.style.display='';return;}
   if(weight&&!S.startWeight)S.startWeight=weight;
-  S.entries.push({date:today(),steps,mins,gym,morning,lunch,evening,desk,weather:selW,water:selWtr,weight,reflection,gratitude:[g1,g2,g3].filter(Boolean)});
+  const entryDate = document.getElementById('log-entry-date').value || today();
+  if(S.entries.some(e=>e.date===entryDate)){if(!confirm('Already have an entry for '+fictDate(entryDate)+'. Add another?'))return;}
+  S.entries.push({date:entryDate,steps,mins,gym,morning,lunch,evening,desk,weather:selW,water:selWtr,weight,reflection,gratitude:[g1,g2,g3].filter(Boolean)});
   save(); checkRankUp(); checkWantedMilestone(); checkWeeklyDispatch();
   closeLog(); showScreen('home');
 }
