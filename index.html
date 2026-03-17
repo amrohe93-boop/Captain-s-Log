@@ -545,8 +545,8 @@ input::placeholder, textarea::placeholder { font-family: 'IM Fell English', seri
 @keyframes neonPulse { 0% { opacity: .5; } 100% { opacity: 1; } }
 
 .card-portrait {
-  width: 100%; height: 110px; overflow: hidden; position: relative; z-index: 1;
-  display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 120px; overflow: hidden; position: relative; z-index: 1;
+  display: flex; align-items: flex-start; justify-content: center;
 }
 .card-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .card-portrait-ph {
@@ -1115,35 +1115,35 @@ const CREW = [
   { id:'cook',    name:'Maggie Vane',    role:'Ship\'s Cook',     rarity:'common',    icon:'👩‍🍳', gender:'f',
     req:'10 entries logged', reqFn:()=>S.entries.length>=10,
     flavour:"She feeds the crew without complaint. The stew is always hot.",
-    prompt:'Portrait bust close-up ship cook woman 1690s golden age piracy woodcut engraving illustration style bold ink lines sepia tones face and shoulders centered warm expression no text no border no background clutter' },
+    prompt:'Landscape format bust portrait upper body ship cook woman 1690s golden age piracy woodcut engraving illustration style bold ink lines sepia tones face and shoulders centered warm expression no text no border no background clutter' },
   { id:'nav',     name:'Thomas Quirk',   role:'Navigator',        rarity:'common',    icon:'🧭', gender:'m',
     req:'First 10,000 step day', reqFn:()=>S.entries.some(e=>e.steps>=10000),
     flavour:"He has never been lost. He has been surprised, but never lost.",
-    prompt:'Portrait bust close-up male navigator sailor 1690s golden age piracy woodcut engraving illustration style bold ink lines sepia tones face and shoulders centered holding compass no text no border' },
+    prompt:'Landscape format bust portrait upper body male navigator sailor 1690s golden age piracy woodcut engraving illustration style bold ink lines sepia tones face and shoulders centered holding compass no text no border' },
   { id:'carp',    name:'Rosa Pale',      role:'Carpenter',        rarity:'common',    icon:'🔨', gender:'f',
     req:'10 gym sessions', reqFn:()=>S.entries.filter(e=>e.gym).length>=10,
     flavour:"She keeps the ship together through sheer stubbornness.",
-    prompt:'Portrait bust close-up female ship carpenter 1690s golden age piracy woodcut engraving style bold ink lines sepia face and shoulders centered strong capable no text no border' },
+    prompt:'Landscape format bust portrait upper body female ship carpenter 1690s golden age piracy woodcut engraving style bold ink lines sepia face and shoulders centered strong capable no text no border' },
   { id:'surg',    name:'Dr. Ines Marta', role:'Surgeon',          rarity:'rare',      icon:'⚕️', gender:'f',
     req:'30 days logged', reqFn:()=>new Set(S.entries.map(e=>e.date)).size>=30,
     flavour:"She has saved lives she was not sure deserved saving.",
-    prompt:'Portrait bust close-up female ship surgeon 1690s golden age piracy dramatic ink illustration style dark background face and shoulders centered intense focused expression no text no border' },
+    prompt:'Landscape format bust portrait upper body female ship surgeon 1690s golden age piracy dramatic ink illustration style dark background face and shoulders centered intense focused expression no text no border' },
   { id:'gun',     name:'Caleb Shore',    role:'Gunner',           rarity:'rare',      icon:'💣', gender:'m',
     req:'50,000 total steps', reqFn:()=>S.entries.reduce((a,e)=>a+(e.steps||0),0)>=50000,
     flavour:"He loves the cannon more than any person alive.",
-    prompt:'Portrait bust close-up male ship gunner 1690s golden age piracy dramatic ink illustration dark background face and shoulders centered weathered dangerous expression no text no border' },
+    prompt:'Landscape format bust portrait upper body male ship gunner 1690s golden age piracy dramatic ink illustration dark background face and shoulders centered weathered dangerous expression no text no border' },
   { id:'bosun',   name:'Nell Farro',     role:'Bosun',            rarity:'rare',      icon:'⚓', gender:'f',
     req:'50 entries logged', reqFn:()=>S.entries.length>=50,
     flavour:"The crew jumps before she finishes the order.",
-    prompt:'Portrait bust close-up female bosun 1690s golden age piracy dramatic ink illustration dark background face and shoulders centered commanding presence no text no border' },
+    prompt:'Landscape format bust portrait upper body female bosun 1690s golden age piracy dramatic ink illustration dark background face and shoulders centered commanding presence no text no border' },
   { id:'mate',    name:'Kit Draven',     role:'First Mate',       rarity:'legendary', icon:'🗡️', gender:'f',
     req:'100 days logged', reqFn:()=>new Set(S.entries.map(e=>e.date)).size>=100,
     flavour:"She is the only one on this ship who frightens you a little.",
-    prompt:'Portrait bust close-up female first mate pirate 1690s neon noir dark illustration style dramatic teal purple lighting face and shoulders centered powerful fierce expression no text no border' },
+    prompt:'Landscape format bust portrait upper body female first mate pirate 1690s neon noir dark illustration style dramatic teal purple lighting face and shoulders centered powerful fierce expression no text no border' },
   { id:'qm',      name:'Marcus Bell',    role:'Quartermaster',    rarity:'legendary', icon:'⚖️', gender:'m',
     req:'180 days logged', reqFn:()=>new Set(S.entries.map(e=>e.date)).size>=180,
     flavour:"He keeps the books. He keeps secrets better.",
-    prompt:'Portrait bust close-up male quartermaster 1690s neon noir dark illustration style dramatic neon lighting deep shadows face and shoulders centered mysterious expression no text no border' },
+    prompt:'Landscape format bust portrait upper body male quartermaster 1690s neon noir dark illustration style dramatic neon lighting deep shadows face and shoulders centered mysterious expression no text no border' },
 ];
 
 const LOOT = [
@@ -1206,8 +1206,8 @@ async function generateCrewPortrait(crewId) {
         positivePrompt: crew.prompt,
         negativePrompt: 'modern photograph anime cartoon text watermark',
         model: 'runware:101@1',
-        width: 512,
-        height: 768,
+        width: 768,
+        height: 512,
         numberResults: 1, outputType: 'URL', outputFormat: 'WEBP',
         steps: crew.rarity==='legendary'?32:26, CFGScale: 7
       }])
