@@ -812,6 +812,7 @@ input::placeholder, textarea::placeholder { font-family: 'IM Fell English', seri
       <div class="settings-group-title">Portrait &amp; Sigil</div>
       <label class="upload-lbl">↑ Upload portrait<input type="file" id="portrait-upload" accept="image/*" style="display:none" onchange="uploadPortrait(this)"/></label>
       <label class="upload-lbl" style="margin-left:.4rem">↑ Upload sigil<input type="file" id="sigil-upload" accept="image/*" style="display:none" onchange="uploadSigil(this)"/></label>
+      <div style="margin-top:.45rem"><button class="s-action" id="sigil-gen-btn" onclick="generateSigil()">✦ Generate sigil (Runware)</button></div>
       <label class="upload-lbl" style="margin-left:.4rem">↑ Wanted poster<input type="file" id="wanted-upload" accept="image/*" style="display:none" onchange="uploadWanted(this)"/></label>
       <div style="margin-top:.45rem"><button class="s-action" onclick="generatePortrait()">✦ Generate portrait (Runware)</button></div>
     </div>
@@ -1003,6 +1004,32 @@ async function generateWanted() {
 }
 
 // ── PORTRAIT ──
+async function generateSigil() {
+  const key = getRWKey();
+  if (!key) { alert('Add Runware key in settings first.'); return; }
+  const btn = document.getElementById('sigil-gen-btn');
+  if (btn) { btn.textContent = 'Generating…'; btn.disabled = true; }
+  try {
+    const res = await fetch('https://api.runware.ai/v1', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer '+key },
+      body: JSON.stringify([{
+        taskType: 'imageInference', taskUUID: crypto.randomUUID(),
+        positivePrompt: 'Heraldic sigil emblem golden age piracy personal seal circular design orca whale crossed cutlasses nautical elements black ink on aged parchment woodblock print engraving style no text no letters no words clean symbolic design',
+        negativePrompt: 'text letters words photograph modern color realistic',
+        model: 'runware:101@1', width: 512, height: 512,
+        numberResults: 1, outputType: 'URL', outputFormat: 'WEBP', steps: 26, CFGScale: 7
+      }])
+    });
+    if (!res.ok) { alert('Runware error: '+res.status); return; }
+    const data = await res.json();
+    const url = data.data?.[0]?.imageURL;
+    if (url) { S.sigilUrl = url; save(); renderHome(); closeSettings(); }
+    else alert('No image returned.');
+  } catch(e) { alert('Failed: '+e.message); }
+  finally { if (btn) { btn.textContent = '✦ Generate sigil'; btn.disabled = false; } }
+}
+
 async function generatePortrait() {
   const key=getRWKey(); if(!key){alert('Add Runware key first.');return;}
   const wh=S.entries.filter(e=>e.weight&&e.weight>0);
@@ -1218,8 +1245,8 @@ function renderCargo() {
       const portraitHTML = portrait
         ? `<img src="${portrait}" alt="${c.name}"/>`
         : `<div class="card-portrait-ph"><span class="ph-icon">${c.icon}</span><span class="ph-text">No portrait yet</span></div>`;
-      const genBtn = !portrait && getRWKey()
-        ? `<button class="card-gen-btn" id="gen-btn-${c.id}" onclick="generateCrewPortrait('${c.id}')">✦ Generate portrait</button>` : '';
+      const genBtn = getRWKey()
+        ? `<button class="card-gen-btn" id="gen-btn-${c.id}" onclick="generateCrewPortrait('${c.id}')">${portrait ? '↻ Regenerate' : '✦ Generate portrait'}</button>` : '';
       return `<div class="crew-card ${c.rarity}">
         <div class="card-portrait">${portraitHTML}</div>
         <div class="card-body">
